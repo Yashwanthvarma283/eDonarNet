@@ -117,6 +117,28 @@
                 margin-top: 30px;
             }
         }
+        .whatsapp {
+            background-color: rgb(17, 245, 5);
+            padding: 30px;
+            position: fixed;
+            bottom: 9%;
+            right: 5%;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s;
+        }
+
+        .whatsapp:hover {
+            transform: scale(1.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
     </style>
 </head>
 
