@@ -1,0 +1,208 @@
+<%@ page import="java.util.List" %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application Failed | eDonorNet</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #e53935;
+            --secondary: #1976d2;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light);
+        }
+
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 15px 0;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary) !important;
+            font-size: 1.5rem;
+        }
+
+        .navbar-brand i {
+            margin-right: 10px;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            color: var(--dark) !important;
+            margin: 0 10px;
+            position: relative;
+        }
+
+        .nav-link.active, .nav-link:hover {
+            color: var(--primary) !important;
+        }
+
+        .nav-link.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--primary);
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 10px;
+            font-weight: bold;
+        }
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 40px 0 20px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: #adb5bd;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="#">
+            <i class="fas fa-heartbeat"></i>eDonorNet
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/dashboard">My Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/donor">Donor Registration</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/user/recipient">Request Blood</a>
+                </li>
+                <li class="nav-item">
+                    <div class="user-profile">
+                        <div class="user-avatar">${logged_user.firstname.charAt(0)}${logged_user.lastname.charAt(0)}</div>
+                        <span >${logged_user.firstname}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<section class="py-5" style="background-color: rgba(229, 57, 53, 0.05);">
+    <div class="container text-center">
+        <div class="feature-icon bg-danger bg-opacity-10 text-danger rounded-circle mx-auto mb-4" style="width: 4rem; height: 4rem; display: flex; align-items: center; justify-content: center;">
+            <i class="fas fa-exclamation-triangle fa-2x"></i>
+        </div>
+        <h1 class="display-5 fw-bold">Application Unsuccessful</h1>
+        <p class="lead text-muted">We were unable to process your application. Please review the reasons below and try again.</p>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow-sm border-0">
+                    <div class="card-body p-4 p-md-5">
+                        <h2 class="text-center mb-4">Reasons for Ineligibility</h2>
+
+                        <div class="alert alert-danger" role="alert" id="reasons-alert-box">
+                            <h4 class="alert-heading">Please correct the following issues:</h4>
+                            <hr>
+                            <ul class="mb-0" id="reasons-list">
+                            <% List<String> reasons= (List<String>) request.getAttribute("reasons");
+                                for (int i=1;i<reasons.size();i++) {
+                                    %>
+                                <li>
+                                    <%= reasons.get(i)%>
+                                </li>
+                            <%
+                                }
+                            %>
+                            </ul>
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a href="/user/donor" class="btn btn-danger btn-lg">
+                                <i class="fas fa-arrow-left me-2"></i>Back to Application Form
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer class="bg-dark text-white py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <h5 class="mb-3">About eDonorNet</h5>
+                <p>A digital platform connecting blood donors with recipients in need, making the donation process
+                    efficient and life-saving.</p>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5 class="mb-3">Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="/user/donor">Donor Registration</a></li>
+                    <li class="mb-2"><a href="/user/recipient">Blood Request</a></li>
+                    <li class="mb-2"><a href="/admin/login">Admin Dashboard</a></li>
+                </ul>
+            </div>
+            <div class="col-md-4 mb-4">
+                <h5 class="mb-3">Contact Us</h5>
+                <p><i class="fas fa-phone me-2"></i> +91 9030726301</p>
+                <p><i class="fas fa-envelope me-2"></i> edonarnet@gmail.com</p>
+            </div>
+        </div>
+        <hr class="my-4">
+        <div class="text-center">
+            <p class="mb-0">&copy; 2025 eDonorNet.</p>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</script>
+
+</body>
+</html>
