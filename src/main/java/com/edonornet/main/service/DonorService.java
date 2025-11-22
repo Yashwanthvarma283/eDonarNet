@@ -1,5 +1,6 @@
 package com.edonornet.main.service;
 
+import com.edonornet.main.configurations.HttpConfig;
 import com.edonornet.main.model.Donor;
 import com.edonornet.main.repository.DonorRepo;
 import org.springframework.stereotype.Service;
@@ -9,7 +10,9 @@ import java.util.List;
 
 @Service
 public class DonorService {
+
     public final DonorRepo donorRepo;
+
     public DonorService(DonorRepo donorRepo){
         this.donorRepo=donorRepo;
     }

@@ -2,10 +2,7 @@ package com.edonornet.main.controller;
 
 
 import com.edonornet.main.model.Donor;
-import com.edonornet.main.model.User;
 import com.edonornet.main.service.DonorService;
-import com.edonornet.main.service.UserService;
-import jakarta.persistence.Id;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,7 +76,7 @@ public class DonorController {
         return "registration-failed";
     }
 
-    @GetMapping("/user/donor/registration/successful/{id}")
+    @GetMapping("/user/donor/registration/successful/DNR-{id}")
     public String sucess(@PathVariable Long id, Model model,HttpSession session){
         Donor donor= donorService.findById(id);
         model.addAttribute(session.getAttribute("logged_user"));
@@ -87,7 +84,7 @@ public class DonorController {
         return "donor-registration";
     }
 
-    @GetMapping("/user/donor/registration/{id}")
+    @GetMapping("/user/donor/registration/DNR-{id}")
     public String status(@PathVariable Long id,Model model,HttpSession session){
         Donor donor=donorService.findById(id);
         model.addAttribute(session.getAttribute("logged_user"));
