@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>eDonorNet - Blood Bank Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #FF5252;
+            --primary-dark: #FF1744;
+            --primary-light: #FFE5E5;
+            --secondary: #5E5E5E;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --info: #2196F3;
+            --danger: #FF5252;
+            --light: #FAFAFA;
+            --dark: #2C2C2C;
+            --sidebar-bg: #FFFFFF;
+            --card-shadow: rgba(0, 0, 0, 0.06);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container-fluid {
+            display: flex;
+            min-height: 100vh;
+            padding: 0;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #f8fafc 0%, #e2e8f0 100%);
+            color: #1f2937;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .logo {
+            padding: 28px 20px;
+            font-size: 22px;
+            font-weight: bold;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(220, 38, 38, 0.1);
+            color: #dc2626;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-menu {
+            list-style: none;
+            padding: 20px 0;
+        }
+
+        .nav-menu li {
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-left: 4px solid transparent;
+            margin: 8px 12px;
+            border-radius: 0 12px 12px 0;
+        }
+
+        .nav-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 16px 20px;
+            color: #1f2937;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .nav-menu li:hover, .nav-menu li.active {
+            background: rgba(220, 38, 38, 0.1);
+            border-left-color: #dc2626;
+        }
+
+        .sidebar-footer {
+            position: absolute;
+            bottom: 0;
+            width: 280px;
+            background: rgba(255, 255, 255, 0.5);
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .user-profile {
+            padding: 18px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FF5252 0%, #FF1744 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(255, 82, 82, 0.3);
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            margin-left: 280px;
+        }
+
+        .header {
+            background: white;
+            padding: 28px 32px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(255, 82, 82, 0.1);
+            margin-bottom: 30px;
+            border-left: 6px solid var(--primary);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px var(--card-shadow);
+            position: relative;
+            border: 1px solid rgba(0, 0, 0, 0.03);
+        }
+
+        .stat-card.red {
+            --card-color: #FF5252;
+        }
+
+        .stat-card.orange {
+            --card-color: #FF9800;
+        }
+
+        .stat-card.green {
+            --card-color: #4CAF50;
+        }
+
+        .stat-card.blue {
+            --card-color: #2196F3;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: white;
+            background: var(--card-color);
+        }
+
+        .activity-section {
+            background: white;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px var(--card-shadow);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .activity-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-left: auto;
+        }
+
+        .badge-success {
+            background: #E8F5E9;
+            color: #2E7D32;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid">
+    <aside class="sidebar">
+        <div class="logo">
+            <i class="fas fa-heartbeat"></i>
+            <span>eDonorNet Admin</span>
+        </div>
+        <ul class="nav-menu">
+            <li class="active">
+                <a th:href="@{/admin/dashboard}">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/donor/panel}">
+                    <i class="fas fa-users"></i>
+                    <span>Donor Management</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/request/panel}">
+                    <i class="fas fa-tint"></i>
+                    <span>Blood Inventory</span>
+                </a>
+            </li>
+            <li>
+                <a th:href="@{/admin/drives}">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Blood Drives</span>
+                </a>
+            </li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="user-avatar" th:text="${#strings.substring(adminName != null ? adminName : 'A',0,1)}">A
+                </div>
+                <div class="user-info">
+                    <div class="user-name" th:text="${adminName != null ? adminName : 'Admin User'}">Admin User</div>
+                    <div class="user-role">Administrator</div>
+                </div>
+            </div>
+            <a th:href="@{/admin/settings}" class="settings text-decoration-none"
+               style="color: inherit; display: flex; padding: 15px 20px; gap: 10px;">
+                <i class="fas fa-cog"></i><span>Settings</span>
+            </a>
+            <a th:href="@{/logout}" class="logout text-decoration-none"
+               style="color: #dc2626; display: flex; padding: 15px 20px; gap: 10px;">
+                <i class="fas fa-sign-out-alt"></i><span>Log Out</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="header">
+            <h1><i class="fas fa-tachometer-alt"></i> Welcome Back, Admin!</h1>
+            <p>Blood Bank Administration - Metropolitan Hospital System</p>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card red">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h3 style="font-size: 0.8rem; color: #888;">TOTAL UNITS</h3>
+                        <div class="value" style="font-size: 2rem; font-weight: bold;"
+                             th:text="${totalUnits != null ? totalUnits : '1,245'}">1,245
+                        </div>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-tint"></i></div>
+                </div>
+            </div>
+
+            <div class="stat-card orange">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h3 style="font-size: 0.8rem; color: #888;">PENDING</h3>
+                        <div class="value" style="font-size: 2rem; font-weight: bold;"
+                             th:text="${pendingRequests != null ? pendingRequests : '14'}">14
+                        </div>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-hourglass-half"></i></div>
+                </div>
+            </div>
+
+            <div class="stat-card green">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h3 style="font-size: 0.8rem; color: #888;">NEW DONORS</h3>
+                        <div class="value" style="font-size: 2rem; font-weight: bold;"
+                             th:text="${newDonors != null ? newDonors : '312'}">312
+                        </div>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-user-plus"></i></div>
+                </div>
+            </div>
+
+            <div class="stat-card blue">
+                <div class="d-flex justify-content-between">
+                    <div>
+                        <h3 style="font-size: 0.8rem; color: #888;">UPCOMING DRIVES</h3>
+                        <div class="value" style="font-size: 2rem; font-weight: bold;"
+                             th:text="${upcomingDrives != null ? upcomingDrives : '5'}">5
+                        </div>
+                    </div>
+                    <div class="stat-icon"><i class="fas fa-calendar-alt"></i></div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="activity-section">
+            <h2 style="font-size: 1.5rem; margin-bottom: 20px;"><i class="fas fa-history"></i> Recent Activity</h2>
+
+            <div th:if="${activities == null}">
+                <div class="activity-item">
+                    <div class="activity-content">
+                        <p>New Donor <strong>John D.</strong> Successfully Registered</p>
+                        <small class="text-muted">Today at 2:45 PM</small>
+                    </div>
+                    <span class="activity-badge badge-success">Approved</span>
+                </div>
+            </div>
+
+            <div th:each="activity : ${activities}" class="activity-item">
+                <div class="activity-content">
+                    <p th:utext="${activity.description}">Activity Description</p>
+                    <small class="text-muted" th:text="${activity.time}">Time Ago</small>
+                </div>
+                <span th:if="${activity.status != null}"
+                      th:classappend="${activity.status == 'Approved' ? 'badge-success' : ''}"
+                      class="activity-badge" th:text="${activity.status}">Status</span>
+            </div>
+        </div>
+    </main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,7 +12,7 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f4f4;
             color: #333;
             min-height: 100vh;
@@ -99,7 +99,6 @@
             background-color: #1e7e34;
         }
 
-        /* Mobile optimization */
         @media (max-width: 768px) {
             .container {
                 padding: 30px 25px;
@@ -107,95 +106,10 @@
 
             h1 {
                 font-size: 20px;
-                margin-bottom: 8px;
             }
 
-            p {
-                font-size: 14px;
-                margin-bottom: 20px;
-            }
-
-            .icon {
-                font-size: 40px;
-                margin-bottom: 12px;
-            }
-
-            .message-box {
-                padding: 8px 10px;
-                font-size: 14px;
-                margin-bottom: 20px;
-            }
-
-            .action-link {
-                padding: 12px 20px;
-                font-size: 14px;
-            }
-
-            .support-button {
-                padding: 10px 15px;
-                font-size: 14px;
+            .action-link, .support-button {
                 width: 100%;
-            }
-        }
-
-        /* Small mobile devices */
-        @media (max-width: 480px) {
-            body {
-                padding: 15px;
-            }
-
-            .container {
-                padding: 25px 20px;
-                border-left-width: 4px;
-            }
-
-            h1 {
-                font-size: 18px;
-            }
-
-            p {
-                font-size: 13px;
-                margin-bottom: 18px;
-            }
-
-            .icon {
-                font-size: 36px;
-            }
-
-            .message-box {
-                padding: 8px;
-                font-size: 13px;
-                margin-bottom: 18px;
-            }
-
-            .action-link {
-                max-width: 100%;
-                padding: 10px 15px;
-                font-size: 14px;
-            }
-        }
-
-        /* Large desktop screens */
-        @media (min-width: 1200px) {
-            .container {
-                padding: 45px;
-            }
-
-            h1 {
-                font-size: 26px;
-            }
-
-            p {
-                font-size: 16px;
-            }
-
-            .icon {
-                font-size: 52px;
-            }
-
-            .message-box {
-                padding: 12px;
-                font-size: 16px;
             }
         }
     </style>
@@ -214,7 +128,8 @@
     </div>
 
     <p>
-        Your current (Email: <strong>{email}</strong>) is already authenticated with Administrator privileges in the eDonor Net system.
+        Your current (Email: <strong th:text="${email}">user@example.com</strong>) is already authenticated with
+        Administrator privileges in the eDonor Net system.
     </p>
 
     <p>
@@ -222,10 +137,10 @@
     </p>
 
     <p>
-        <a href="/admin/signin" class="action-link">Go to Admin Login</a>
+        <a th:href="@{/admin/dashboard}" class="action-link">Go to Admin Dashboard</a>
     </p>
 
-    <a href="mailto:edonornet@gmail.com" class="support-button">Contact Customer Support</a>
+    <a th:href="'mailto:edonarnet@gmail.com'" class="support-button">Contact Customer Support</a>
 </div>
 
 </body>
