@@ -65,7 +65,7 @@ public class UserAccessController {
             user.setFirstname(user.getFirstname().substring(0,1).toUpperCase()+user.getFirstname().substring(1).toLowerCase());
             user.setLastname(user.getLastname().substring(0,1).toUpperCase()+user.getLastname().substring(1).toLowerCase());
             userService.saveuser(user);
-            return "redirect:/signin";
+            return "redirect:/user/signin";
         }
 
     }
