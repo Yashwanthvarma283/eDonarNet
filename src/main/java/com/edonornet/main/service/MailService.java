@@ -18,7 +18,7 @@ public class MailService {
     public void send(String subject, String body) {
 
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo("yashwanthvarma.sse@gmail.com"); // admin email
+        message.setTo("yashwanth.sse@gmail.com");
         message.setSubject(subject);
         message.setText(body);
 
