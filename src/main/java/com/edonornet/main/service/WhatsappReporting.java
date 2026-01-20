@@ -25,5 +25,7 @@ public class WhatsappReporting {
                         "At Path"+path+"\n"+
                         "Details "+details+"\n"+
                         "User"+user_details+"\n";
+
+        System.out.println(message);
     }
 }

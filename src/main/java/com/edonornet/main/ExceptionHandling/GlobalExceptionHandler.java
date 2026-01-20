@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
     public String handler(Exception exception, Model model, HttpServletRequest request){
         model.addAttribute("message","Internal issue is faced");
         model.addAttribute("details", exception.getMessage());
-        model.addAttribute("message",request.getRequestURI());
+        model.addAttribute("path",request.getRequestURI());
 
         return "error";
 
