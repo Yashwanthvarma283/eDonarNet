@@ -1,10 +1,8 @@
 package com.edonornet.main.controller;
 
 
-import com.edonornet.main.model.Admin;
 import com.edonornet.main.model.Donor;
 import com.edonornet.main.model.Recipient;
-import com.edonornet.main.model.User;
 import com.edonornet.main.service.DonorService;
 import com.edonornet.main.service.RecipientService;
 import jakarta.servlet.http.HttpSession;
